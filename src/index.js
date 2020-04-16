@@ -1,9 +1,8 @@
 import './styles.css';
-// import * as basicLightbox from 'basiclightbox'
+import 'basiclightbox/dist/basicLightbox.min.css';
+import * as basicLightbox from 'basiclightbox';
 import apiServiceFetch from './apiService';
 import imageItemTemplate from './imageItem.hbs'
-
-// const basicLightbox = require('basiclightbox')
 
 const refs = {
   searchForm: document.querySelector('#search-form'),
@@ -13,6 +12,7 @@ const refs = {
 
 refs.searchForm.addEventListener('input', searchFormInputHandler);
 refs.btnLoadMore.addEventListener('click', btnLoadMoreHandler);
+refs.galleryList.addEventListener('click', modalWindowHandler);
 
 function searchFormInputHandler(e) {
 
@@ -55,3 +55,12 @@ function scrollToItems(){
 }
 
 
+function modalWindowHandler(e) {
+  if(e.target.nodeName === 'IMG') {
+    const largeImageURL = e.target.dataset.action;
+    basicLightbox.create(
+      `<img width="800" height="500" src="${largeImageURL}">`,
+    )
+    .show();
+  }
+}
